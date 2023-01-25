@@ -5,11 +5,12 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { TiposedesService } from './tiposedes.service';
 import { CreateTiposedeDto } from './dto/create-tiposede.dto';
 import { UpdateTiposedeDto } from './dto/update-tiposede.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('tiposedes')
 export class TiposedesController {
@@ -26,8 +27,9 @@ export class TiposedesController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard())
   findOne(@Param('id') id: string) {
-    return this.tiposedesService.findOne(+id);
+    return this.tiposedesService.findOne(id);
   }
 
   @Patch(':id')
@@ -36,10 +38,5 @@ export class TiposedesController {
     @Body() updateTiposedeDto: UpdateTiposedeDto,
   ) {
     return this.tiposedesService.update(+id, updateTiposedeDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tiposedesService.remove(+id);
   }
 }

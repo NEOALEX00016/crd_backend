@@ -11,6 +11,12 @@ import { DivisionEntity } from './division/entities/division.entity';
 import { AuthModule } from './auth/auth.module';
 import { User } from './auth/entities/user.entity';
 import { TiposedesModule } from './tiposedes/tiposedes.module';
+import { SedesModule } from './sedes/sedes.module';
+import { TiposedeEntity } from './tiposedes/entities/tiposede.entity';
+import { SedeEntity } from './sedes/entities/sede.entity';
+import { AreasModule } from './areas/areas.module';
+import { ModulosModule } from './modulos/modulos.module';
+import { RolesModule } from './roles/roles.module';
 
 const env = process.env;
 @Module({
@@ -24,7 +30,14 @@ const env = process.env;
       password: env.DB_PASS,
       database: env.DB_NAME,
       autoLoadEntities: !!env.DB_AUTOLOAD,
-      entities: [PaisEntity, TiposdivisionEntity, DivisionEntity, User],
+      entities: [
+        PaisEntity,
+        TiposdivisionEntity,
+        DivisionEntity,
+        User,
+        TiposedeEntity,
+        SedeEntity,
+      ],
       synchronize: false,
       schema: 'iniciar',
     }),
@@ -34,6 +47,10 @@ const env = process.env;
     DivisionModule,
     AuthModule,
     TiposedesModule,
+    SedesModule,
+    AreasModule,
+    ModulosModule,
+    RolesModule,
   ],
   controllers: [],
   providers: [],

@@ -55,7 +55,7 @@ export class DivisionService {
     if (!division) throw new NotFoundException('Division id no encotrada');
 
     try {
-      await this.divisionrepository.save(division);
+      await this.divisionrepository.update(id, division);
       return division;
     } catch (error) {
       throw new NotFoundException('Error Actualizado los Datos ');

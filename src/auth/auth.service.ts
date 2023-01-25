@@ -13,6 +13,10 @@ import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtPayload } from './intefaces/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
+import { UpdatepassDto } from './dto/update-password.dto';
+import { use } from 'passport';
+import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
+import { Delete } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -55,7 +59,7 @@ export class AuthService {
 
     if (!bcrypt.compareSync(password, user.password))
       throw new UnauthorizedException('Usuario o Contraseña Invalidos');
-
+    delete user.password;
     return {
       ...user,
       token: this.getjwt({
@@ -64,6 +68,21 @@ export class AuthService {
         estado: user.estado,
       }),
     };
+  }
+
+  async update(id: number, updatepassdto: UpdatepassDto) {
+    const user = await this.userrepository.preload({ id, ...updatepassdto });
+    //const newpassword: bcrypt.hashSync(password, 10);
+    if (!user) throw new NotFoundException('Usuario no Encontrado');
+
+    try {
+      user.password = await bcrypt.hashSync(updatepassdto.password, 10);
+      await this.userrepository.update(id, user);
+      delete user.password;
+      return user;
+    } catch (error) {
+      throw new BadRequestException(`${error}`);
+    }
   }
 
   private ErrorDB(error: any) {

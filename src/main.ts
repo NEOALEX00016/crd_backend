@@ -8,16 +8,16 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   //TODO ESTO ES PARA LAS LLAVES DE SSL
-  //const crPath= './'
-  //const pkPath='./'
+  const crPath = './secrets/cert.pem';
+  const pkPath = './secrets/privkey.pem';
   const option: any = {};
-  //  if (fs.existsSync(crPath) && fs.existsSync(pkPath)) {
-  //   // cargamos los archivos sobre las options
-  //   option.httpsOptions = {
-  //     cert: fs.readFileSync(crPath),
-  //     key: fs.readFileSync(pkPath),
-  //   };
-  // }
+  if (fs.existsSync(crPath) && fs.existsSync(pkPath)) {
+    // cargamos los archivos sobre las options
+    option.httpsOptions = {
+      cert: fs.readFileSync(crPath),
+      key: fs.readFileSync(pkPath),
+    };
+  }
 
   const app = await NestFactory.create(AppModule);
   //TODO esta es para el ssl
@@ -43,7 +43,6 @@ async function bootstrap() {
 
   apps.enableCors({
     origin: '*',
-    credentials: false,
   });
   app.useGlobalPipes(
     new ValidationPipe({

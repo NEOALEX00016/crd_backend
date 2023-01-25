@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTiposedeDto } from './dto/create-tiposede.dto';
 import { UpdateTiposedeDto } from './dto/update-tiposede.dto';
 import { TiposedeEntity } from './entities/tiposede.entity';
-import { Repository } from 'typeorm';
+
 import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TiposedesService {
@@ -16,27 +17,43 @@ export class TiposedesService {
   async create(createTiposedeDto: CreateTiposedeDto) {
     const tipo = await this.tiposede.create(createTiposedeDto);
 
-    const sede = await this.tiposede.save(tipo);
+    try {
+      await this.tiposede.save(tipo);
 
-    return sede;
+      return tipo;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
   async findAll() {
     const tiposede = await this.tiposede.find();
+
     if (tiposede.length <= 0) throw new NotFoundException('No Existe Registro');
 
     return tiposede;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tiposede`;
+  async findOne(term: string) {
+    const qry = this.tiposede.createQueryBuilder();
+
+    const tipos = await qry.where('nombre=:nombre', { nombre: term }).getOne();
+
+    if (!tipos) throw new NotFoundException(`Tipo de Sede no Existe `);
+    return tipos;
   }
 
-  update(id: number, updateTiposedeDto: UpdateTiposedeDto) {
-    return `This action updates a #${id} tiposede`;
-  }
+  async update(id: number, updateTiposedeDto: UpdateTiposedeDto) {
+    const tipos = await this.tiposede.preload({ id, ...updateTiposedeDto });
 
-  remove(id: number) {
-    return `This action removes a #${id} tiposede`;
+    if (!tipos)
+      throw new BadRequestException('Error a Actualizar no Encontrado');
+
+    try {
+      await this.tiposede.update(id, tipos);
+      return tipos;
+    } catch (error) {
+      throw new BadRequestException('Error al Actualizar los Datos');
+    }
   }
 }

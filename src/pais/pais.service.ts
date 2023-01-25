@@ -53,7 +53,7 @@ export class PaisService {
     if (!pais) throw new NotFoundException(`Pais id:#${id} no  Encontrado`);
 
     try {
-      await this.paisrepository.save(pais);
+      await this.paisrepository.update(id, pais);
       return pais;
     } catch (error) {
       throw new BadRequestException(`${error}`);

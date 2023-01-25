@@ -49,7 +49,7 @@ export class TiposdivisionService {
     if (!tipo) throw new NotFoundException('Tipo de Division No Existe');
 
     try {
-      await this.tipodivision.save(tipo);
+      await this.tipodivision.update(id, tipo);
       return tipo;
     } catch (error) {
       throw new BadRequestException('Error Actualizando El Tipo de Division');
