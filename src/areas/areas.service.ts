@@ -50,4 +50,12 @@ export class AreasService {
       throw new BadRequestException('Error Actualizando los Registros');
     }
   }
+
+  async findId(term: number) {
+    const qry = this.arearepo.createQueryBuilder();
+    const area = await qry.where('id=:id', { id: term }).getOne();
+    if (!area) throw new NotFoundException(`Area ${term} no Encontrada`);
+
+    return area;
+  }
 }

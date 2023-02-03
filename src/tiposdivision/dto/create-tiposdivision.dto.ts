@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export default class CreateTiposdivisionDto {
   @IsNumber()
@@ -19,6 +25,7 @@ export default class CreateTiposdivisionDto {
   nombre: string;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty({
     description:
       'Este es para el orden Jerargico de las dependecias de los niveles',
@@ -35,6 +42,7 @@ export default class CreateTiposdivisionDto {
   estado: string;
 
   @IsString()
+  @IsOptional()
   @ApiProperty({
     description: 'Esto es el Usuario que realizo la insercion del registro',
     example: 'NeftaliRosario',
@@ -42,6 +50,7 @@ export default class CreateTiposdivisionDto {
   agregado_por: string;
 
   @IsDate()
+  @IsOptional()
   @ApiProperty({
     description: 'La Fecha que se Agrego el Registro',
     example: '2022-03-29T13:34:00.000',
@@ -49,6 +58,7 @@ export default class CreateTiposdivisionDto {
   agregado_en: Date;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty({
     description:
       'El id del con el rol que se realizo Esto porque un mismo usuario puede tener varios roles al mismo tiempo',
@@ -56,6 +66,7 @@ export default class CreateTiposdivisionDto {
   })
   rol_agregado_id: number;
   @IsString()
+  @IsOptional()
   @ApiProperty({
     description:
       'El Nombre del con el rol que se realizo Esto porque un mismo usuario puede tener varios roles al mismo tiempo',
@@ -64,6 +75,7 @@ export default class CreateTiposdivisionDto {
   rol_agregado_nom: string;
 
   @IsString()
+  @IsOptional()
   @ApiProperty({
     description: 'Esto es el Usuario que realizo la modificacion del registro',
     example: 'NeftaliRosario',
@@ -71,6 +83,7 @@ export default class CreateTiposdivisionDto {
   modificado_por: string;
 
   @IsDate()
+  @IsOptional()
   @ApiProperty({
     description: 'La Fecha que se modifico el Registro',
     example: '2022-03-29T13:34:00.000',
@@ -78,6 +91,7 @@ export default class CreateTiposdivisionDto {
   modificado_en: Date;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty({
     description:
       'El id del con el rol que se realizo Esto porque un mismo usuario puede tener varios roles al mismo tiempo',
@@ -85,6 +99,7 @@ export default class CreateTiposdivisionDto {
   })
   rol_modificado_id: number;
   @IsString()
+  @IsOptional()
   @ApiProperty({
     description:
       'El Nombre del con el rol que se realizo Esto porque un mismo usuario puede tener varios roles al mismo tiempo',

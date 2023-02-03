@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('tbl_tipos_sedes')
 export class TiposedeEntity {
@@ -30,4 +36,13 @@ export class TiposedeEntity {
   rol_modificado_id: number;
   @Column()
   rol_modificado_nom: string;
+  @BeforeInsert()
+  agregadopor() {
+    this.agregado_en = new Date();
+  }
+
+  @BeforeUpdate()
+  modificadopor() {
+    this.modificado_en = new Date();
+  }
 }

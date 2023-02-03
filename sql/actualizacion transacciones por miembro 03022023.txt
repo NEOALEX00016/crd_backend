@@ -1,0 +1,132 @@
+//Ejecutado
+
+
+-- Table: iniciar.tbl_transacciones_de_miembros
+
+DROP TABLE IF EXISTS iniciar.tbl_transacciones_de_miembros;
+
+CREATE SEQUENCE IF NOT EXISTS iniciar.tbl_transacciones_de_miembros_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1
+    ;
+
+ALTER SEQUENCE iniciar.tbl_transacciones_de_miembros_id_seq
+    OWNER TO crduser;
+
+
+CREATE TABLE IF NOT EXISTS iniciar.tbl_transacciones_de_miembros
+(
+    id bigint NOT NULL DEFAULT nextval('iniciar.tbl_transacciones_de_miembros_id_seq'::regclass),
+    id_miembro bigint NOT NULL,
+	descripcion character(1000) NOT NULL,
+    valor_anterior character(1000) COLLATE pg_catalog."default",
+    valor_actual character(1000) COLLATE pg_catalog."default",
+    estado character(10) COLLATE pg_catalog."default",
+    agregado_por character(100) COLLATE pg_catalog."default" NOT NULL,
+    agregado_en TIMESTAMP without time zone NOT NULL,
+    rol_agregado_id bigint,
+    rol_agregado_nom character(100) COLLATE pg_catalog."default",
+    modificado_por character(100) COLLATE pg_catalog."default",
+    modificado_en TIMESTAMP without time zone,
+    rol_modificado_id bigint,
+    rol_modificado_nom character(1) COLLATE pg_catalog."default",
+    CONSTRAINT tbl_transacciones_de_miembros_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS iniciar.tbl_transacciones_de_miembros
+    OWNER to crduser;
+
+COMMENT ON TABLE iniciar.tbl_transacciones_de_miembros
+    IS 'Esto Almacenara todas las transacciones de los miembros ';
+
+
+
+
+
+
+
+
+create function iniciar.SPT_movimiento_miembros() returns trigger
+as
+$$
+
+begin
+insert into iniciar."tbl_transacciones_de_miembros"(id_miembro,descripcion,
+											valor_anterior,valor_actual,estado,agregado_por,agregado_en,
+											rol_agregado_id,rol_agregado_nom,modificado_por,modificado_en,
+											rol_modificado_id,rol_modificado_nom
+										   
+										   )values(old.id,'Actualizacion o Modificacion de Nombre de Miembro',
+													old.nombre,new.nombre,'Activo',new.agregado_por,new.agregado_en,
+											new.rol_agregado_id,new.rol_agregado_nom,new.modificado_por,new.modificado_en,
+											new.rol_modificado_id,new.rol_modificado_nom );
+
+
+return new;
+end 
+$$
+language plpgsql
+
+
+;
+
+
+
+create trigger tr_miembro before update on iniciar.tbl_miembros
+for each row
+execute procedure iniciar.SPT_movimiento_miembros();
+
+
+
+
+
+ALTER TABLE IF EXISTS iniciar.tbl_transacciones_de_miembros
+    ADD CONSTRAINT "Fk_miembros" FOREIGN KEY (id_miembro)
+    REFERENCES iniciar.tbl_miembros (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+CREATE SEQUENCE IF NOT EXISTS iniciar.tbl_miembros_posiciones_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1
+    ;
+
+ALTER SEQUENCE iniciar.tbl_miembros_posiciones_id_seq
+    OWNER TO postgres;
+
+
+CREATE TABLE IF NOT EXISTS iniciar.tbl_miembros_posiciones
+(
+    id bigint NOT NULL DEFAULT nextval('iniciar.tbl_miembros_posiciones_id_seq'::regclass),
+    id_pais bigint NOT NULL,
+    id_miembro bigint NOT NULL,
+    estado character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    agregado_por character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    agregado_en timestamp without time zone NOT NULL,
+    rol_agregado_id bigint,
+    rol_agregado_nom character varying(100) COLLATE pg_catalog."default",
+    modificado_por character varying(100) COLLATE pg_catalog."default",
+    modificado_en timestamp without time zone,
+    rol_modificado_id bigint,
+    rol_modificado_nom character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT tbl_miembros_posiciones_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS iniciar.tbl_miembros_posiciones
+    OWNER to postgres;
+
+COMMENT ON TABLE iniciar.tbl_miembros_posiciones
+    IS 'Esta Tabla Contiene los Miembros y las Posiciones  asociadas a este miembro';
+	

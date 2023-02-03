@@ -17,6 +17,12 @@ import { SedeEntity } from './sedes/entities/sede.entity';
 import { AreasModule } from './areas/areas.module';
 import { ModulosModule } from './modulos/modulos.module';
 import { RolesModule } from './roles/roles.module';
+import { DetallerolesModule } from './detalleroles/detalleroles.module';
+import { OpcionesmenuModule } from './opcionesmenu/opcionesmenu.module';
+import { PosicionesModule } from './posiciones/posiciones.module';
+import { TiposdocumentosModule } from './tiposdocumentos/tiposdocumentos.module';
+import { MiembrosModule } from './miembros/miembros.module';
+import { MailModule } from './mail/mail.module';
 
 const env = process.env;
 @Module({
@@ -51,6 +57,12 @@ const env = process.env;
     AreasModule,
     ModulosModule,
     RolesModule,
+    DetallerolesModule,
+    OpcionesmenuModule,
+    PosicionesModule,
+    TiposdocumentosModule,
+    MiembrosModule,
+    MailModule,
   ],
   controllers: [],
   providers: [],

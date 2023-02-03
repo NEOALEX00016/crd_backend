@@ -16,13 +16,11 @@ export class PaisController {
   }
 
   @Get()
-  @UseGuards(AuthGuard())
   findAll() {
     return this.paisService.findAll();
   }
 
   @Get(':term')
-  @UseGuards(AuthGuard())
   findOne(@Param('term') term: string) {
     return this.paisService.findOne(term);
   }

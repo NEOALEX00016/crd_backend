@@ -17,11 +17,13 @@ export class TiposedesController {
   constructor(private readonly tiposedesService: TiposedesService) {}
 
   @Post()
+  @UseGuards(AuthGuard())
   create(@Body() createTiposedeDto: CreateTiposedeDto) {
     return this.tiposedesService.create(createTiposedeDto);
   }
 
   @Get()
+  @UseGuards(AuthGuard())
   findAll() {
     return this.tiposedesService.findAll();
   }
@@ -33,6 +35,7 @@ export class TiposedesController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard())
   update(
     @Param('id') id: string,
     @Body() updateTiposedeDto: UpdateTiposedeDto,

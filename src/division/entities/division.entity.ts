@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BeforeInsert,
+  BeforeUpdate,
+} from 'typeorm';
 
 @Entity('tbl_division')
 export class DivisionEntity {
@@ -31,4 +37,14 @@ export class DivisionEntity {
   rol_modificado_id: number;
   @Column()
   rol_modificado_nom: string;
+
+  @BeforeInsert()
+  agregadopor() {
+    this.agregado_en = new Date();
+  }
+
+  @BeforeUpdate()
+  modificadopor() {
+    this.modificado_en = new Date();
+  }
 }

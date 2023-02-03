@@ -27,15 +27,17 @@ export class User {
   agregado_en: Date;
 
   @Column({ type: 'timestamp' })
-  modificado_en: string;
+  modificado_en: Date;
 
   @BeforeInsert()
   checkFieldBeforeInsert() {
     this.usuario = this.usuario.toLowerCase().trim();
+    this.agregado_en = new Date();
   }
 
   @BeforeUpdate()
   checkFieldBeforepdate() {
     this.checkFieldBeforeInsert();
+    this.modificado_en = new Date();
   }
 }

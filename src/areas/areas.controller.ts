@@ -34,4 +34,9 @@ export class AreasController {
   update(@Param('id') id: string, @Body() updateAreaDto: UpdateAreaDto) {
     return this.areasService.update(+id, updateAreaDto);
   }
+
+  @Get('id/:id')
+  findId(@Param('id') id: number) {
+    return this.areasService.findId(+id);
+  }
 }

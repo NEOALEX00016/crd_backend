@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber, MinLength, MaxLength, Matches, IsEmail,  IsOptional } from 'class-validator';
+import { IsString, IsNumber, MinLength, MaxLength, Matches, IsEmail,  IsOptional, } from 'class-validator';
 
 
 
 
 export class CreateUserDto {
 
+  
   @IsNumber()
   @ApiProperty({description:'Id de pais al que pertenece este usuario el id del pais se encuentra en la tabla paises',example:1})
   id_pais: number;

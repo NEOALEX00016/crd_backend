@@ -53,4 +53,11 @@ export class SedesService {
       throw new BadRequestException('Error Actualizando Sede');
     }
   }
+
+  async findid(term: number) {
+    const qry = this.sederepo.createQueryBuilder();
+    const sede = await qry.where('id=:id', { id: term }).getOne();
+    if (!sede) throw new NotFoundException('No existe esta Sede');
+    return sede;
+  }
 }

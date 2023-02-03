@@ -34,10 +34,18 @@ export class TiposdivisionService {
 
   async findOne(term: string) {
     const query = await this.tipodivision.createQueryBuilder();
-    const tipodivision = query
-      .where('nombre=:nombre', { nombre: term })
-      .getOne();
-    return tipodivision;
+
+    if (!isNaN(+term)) {
+      const tipodivision = query
+        .where('id_pais=:id_pais', { id_pais: +term })
+        .getMany();
+      return tipodivision;
+    } else {
+      const tipodivision = query
+        .where('nombre=:nombre', { nombre: term })
+        .getOne();
+      return tipodivision;
+    }
   }
 
   async update(id: number, updateTiposdivisionDto: UpdateTiposdivisionDto) {

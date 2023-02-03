@@ -14,9 +14,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { JwtPayload } from './intefaces/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { UpdatepassDto } from './dto/update-password.dto';
-import { use } from 'passport';
 import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
-import { Delete } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -40,6 +38,7 @@ export class AuthService {
         token: this.getjwt({
           usuario: user.usuario,
           id: user.id,
+          id_miembro: user.id_miembro,
           estado: user.estado,
         }),
       };
@@ -52,7 +51,13 @@ export class AuthService {
     const { password, usuario } = loginuserdto;
     const user = await this.userrepository.findOne({
       where: { usuario },
-      select: { usuario: true, password: true, id: true, estado: true },
+      select: {
+        usuario: true,
+        password: true,
+        id: true,
+        estado: true,
+        id_miembro: true,
+      },
     });
     if (!user)
       throw new UnauthorizedException('Usuario o Contraseña Invalidos');
@@ -65,6 +70,7 @@ export class AuthService {
       token: this.getjwt({
         usuario: user.usuario,
         id: user.id,
+        id_miembro: user.id_miembro,
         estado: user.estado,
       }),
     };

@@ -35,11 +35,12 @@ export class RoleEntity {
   @Column()
   rol_modificado_nom: string;
   @BeforeInsert()
-  checkFieldBeforeInsert() {
-    //this.usuario = this.usuario.toLowerCase().trim();
+  agregadopor() {
+    this.agregado_en = new Date();
   }
+
   @BeforeUpdate()
-  checkFieldBeforepdate() {
-    this.checkFieldBeforeInsert();
+  modificadopor() {
+    this.modificado_en = new Date();
   }
 }

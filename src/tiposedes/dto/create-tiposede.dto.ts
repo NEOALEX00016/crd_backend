@@ -52,12 +52,14 @@ export class CreateTiposedeDto {
   agregado_en: Date;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty({
     description: 'Id rol Agregado ',
     example: '1',
   })
   rol_agregado_id: number;
   @IsString()
+  @IsOptional()
   @ApiProperty({
     description: 'Nombre del rol que agrego',
     example: 'Voluntario',

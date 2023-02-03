@@ -8,21 +8,25 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   //TODO ESTO ES PARA LAS LLAVES DE SSL
-  const crPath = './secrets/cert.pem';
-  const pkPath = './secrets/privkey.pem';
+  const crPath = '/etc/ssl/virtualmin/1674753540413463/cert.pem';
+  const pkPath = '/etc/ssl/virtualmin/1674753540413463/sslkey.pem';
   const option: any = {};
+  console.log(fs.existsSync(crPath));
+  console.log(fs.existsSync(pkPath));
   if (fs.existsSync(crPath) && fs.existsSync(pkPath)) {
     // cargamos los archivos sobre las options
+    console.log('existe');
     option.httpsOptions = {
       cert: fs.readFileSync(crPath),
       key: fs.readFileSync(pkPath),
     };
   }
 
-  const app = await NestFactory.create(AppModule);
+  // const app = await NestFactory.create(AppModule, { cors: true });
   //TODO esta es para el ssl
-  const apps = await NestFactory.create(AppModule, option);
-  app.setGlobalPrefix('des');
+  console.log(option);
+  const apps = await NestFactory.create(AppModule, option, { cors: true });
+  // app.setGlobalPrefix('des');
   apps.setGlobalPrefix('api');
   const options = new DocumentBuilder()
     .setTitle('api_crd')
@@ -31,25 +35,25 @@ async function bootstrap() {
     )
     .setVersion('1.0')
     .build();
-  const document = SwaggerModule.createDocument(app, options);
+  //const document = SwaggerModule.createDocument(app, options);
   const documents = SwaggerModule.createDocument(apps, options);
-  SwaggerModule.setup('des', app, document);
+  //SwaggerModule.setup('des', app, document);
   SwaggerModule.setup('api', apps, documents);
-
-  app.enableCors({
-    origin: '*',
-    credentials: false,
-  });
+  //
+  // app.enableCors({
+  // origin: '*',
+  //credentials: false,
+  //});
 
   apps.enableCors({
     origin: '*',
   });
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: false,
-      forbidNonWhitelisted: true,
-    }),
-  );
+  //app.useGlobalPipes(
+  // new ValidationPipe({
+  //  whitelist: false,
+  //forbidNonWhitelisted: true,
+  //}),
+  //);
 
   apps.useGlobalPipes(
     new ValidationPipe({
@@ -58,7 +62,7 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3400);
+  // await app.listen(3400);
   await apps.listen(4362);
 }
 bootstrap();

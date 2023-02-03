@@ -37,11 +37,21 @@ export class PaisService {
 
   async findOne(term: string) {
     const query = this.paisrepository.createQueryBuilder();
-    const pais = await query.where('nombre=:nombre', { nombre: term }).getOne();
 
-    if (!pais) throw new NotFoundException(`Pais ${term} no Registrado`);
+    if (!isNaN(+term)) {
+      const pais = await query.where('id=:id', { id: +term }).getOne();
 
-    return pais;
+      if (!pais) throw new NotFoundException(`Pais ${term} no Registrado`);
+
+      return pais;
+    } else {
+      const pais = await query
+        .where('nombre=:nombre', { nombre: term })
+        .getOne();
+      if (!pais) throw new NotFoundException(`Pais ${term} no Registrado`);
+
+      return pais;
+    }
   }
 
   async update(id: number, updatePaisDto: UpdatePaisDto) {

@@ -1,13 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { SedesService } from './sedes.service';
 import { CreateSedeDto } from './dto/create-sede.dto';
 import { UpdateSedeDto } from './dto/update-sede.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('sedes')
 export class SedesController {
   constructor(private readonly sedesService: SedesService) {}
 
   @Post()
+  @UseGuards(AuthGuard())
   create(@Body() createSedeDto: CreateSedeDto) {
     return this.sedesService.create(createSedeDto);
   }
@@ -23,7 +33,12 @@ export class SedesController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard())
   update(@Param('id') id: string, @Body() updateSedeDto: UpdateSedeDto) {
     return this.sedesService.update(+id, updateSedeDto);
+  }
+  @Get('id/:id')
+  findid(@Param('id') id: number) {
+    return this.sedesService.findid(+id);
   }
 }

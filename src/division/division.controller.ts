@@ -21,10 +21,10 @@ export class DivisionController {
     return this.divisionService.findAll();
   }
 
-  @Get(':id')
+  @Get(':nombre')
   @UseGuards(AuthGuard())
-  findOne(@Param('id') id: string) {
-    return this.divisionService.findOne(id);
+  findOne(@Param('nombre') nombre: string) {
+    return this.divisionService.findOne(nombre);
   }
 
   @Patch(':id')
@@ -34,5 +34,11 @@ export class DivisionController {
     @Body() updateDivisionDto: UpdateDivisionDto,
   ) {
     return this.divisionService.update(id, updateDivisionDto);
+  }
+
+  @Get('id/:id')
+  @UseGuards(AuthGuard())
+  findid(@Param('id') id: string) {
+    return this.divisionService.findid(id);
   }
 }

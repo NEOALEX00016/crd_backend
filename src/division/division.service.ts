@@ -61,4 +61,13 @@ export class DivisionService {
       throw new NotFoundException('Error Actualizado los Datos ');
     }
   }
+
+  async findid(term: string) {
+    const qry = this.divisionrepository.createQueryBuilder();
+    const division = await qry.where('id=:id', { id: term }).getOne();
+    if (!division)
+      throw new NotFoundException(`Division ${term} no Registrada`);
+
+    return division;
+  }
 }
