@@ -6,42 +6,30 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-@Entity('tbl_miembros')
-export class MiembroEntity {
+
+@Entity('tbl_cursos')
+export class CursoEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   uuid: string;
+
   @Column()
   id_pais: number;
   @Column()
-  id_sede: number;
+  descripcion: string;
   @Column()
-  id_area: number;
+  idcolection: string;
+
+  @Column()
+  tipo: string;
+
   @Column()
   nombre: string;
-  @Column()
-  apellido: string;
-  @Column()
-  nacionalidad: string;
-  @Column()
-  lugar_de_nacimiento: string;
-  @Column()
-  fecha_de_nacimiento: Date;
-  @Column()
-  id_tipo_documento: number;
-  @Column()
-  documento: string;
-  @Column()
-  email: string;
-  @Column()
-  fecha_de_registro: Date;
-  @Column()
-  fecha_de_finalizacion: Date;
-  @Column()
-  tipo_miembro: number;
 
+  @Column()
+  portada: string;
   @Column()
   estado: string;
   @Column()

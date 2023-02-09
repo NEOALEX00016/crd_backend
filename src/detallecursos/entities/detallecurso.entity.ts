@@ -1,46 +1,35 @@
 import { v4 as uuid } from 'uuid';
 import {
-  BeforeInsert,
-  BeforeUpdate,
-  Column,
   Entity,
   PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  BeforeUpdate,
 } from 'typeorm';
-@Entity('tbl_miembros')
-export class MiembroEntity {
+@Entity('tbl_detalle_de_cursos')
+export class DetallecursoEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
+  id_curso: number;
+
+  @Column()
+  titulo: string;
+  @Column()
+  descripcion: string;
+  @Column()
+  tipo: string;
+  @Column()
+  url: string;
+  @Column()
+  id_formulario: string;
+  @Column()
+  portada: string;
+  @Column()
   uuid: string;
   @Column()
-  id_pais: number;
-  @Column()
-  id_sede: number;
-  @Column()
-  id_area: number;
-  @Column()
-  nombre: string;
-  @Column()
-  apellido: string;
-  @Column()
-  nacionalidad: string;
-  @Column()
-  lugar_de_nacimiento: string;
-  @Column()
-  fecha_de_nacimiento: Date;
-  @Column()
-  id_tipo_documento: number;
-  @Column()
-  documento: string;
-  @Column()
-  email: string;
-  @Column()
-  fecha_de_registro: Date;
-  @Column()
-  fecha_de_finalizacion: Date;
-  @Column()
-  tipo_miembro: number;
+  guid: string;
 
   @Column()
   estado: string;

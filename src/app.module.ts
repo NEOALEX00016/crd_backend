@@ -23,6 +23,10 @@ import { PosicionesModule } from './posiciones/posiciones.module';
 import { TiposdocumentosModule } from './tiposdocumentos/tiposdocumentos.module';
 import { MiembrosModule } from './miembros/miembros.module';
 import { MailModule } from './mail/mail.module';
+import { FilesModule } from './files/files.module';
+import { CursosModule } from './cursos/cursos.module';
+import { MiembrosposicionModule } from './miembrosposicion/miembrosposicion.module';
+import { DetallecursosModule } from './detallecursos/detallecursos.module';
 
 const env = process.env;
 @Module({
@@ -63,6 +67,10 @@ const env = process.env;
     TiposdocumentosModule,
     MiembrosModule,
     MailModule,
+    FilesModule,
+    CursosModule,
+    MiembrosposicionModule,
+    DetallecursosModule,
   ],
   controllers: [],
   providers: [],
