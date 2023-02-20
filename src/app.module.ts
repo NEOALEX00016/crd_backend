@@ -27,6 +27,8 @@ import { FilesModule } from './files/files.module';
 import { CursosModule } from './cursos/cursos.module';
 import { MiembrosposicionModule } from './miembrosposicion/miembrosposicion.module';
 import { DetallecursosModule } from './detallecursos/detallecursos.module';
+import { MiscursosModule } from './miscursos/miscursos.module';
+import { DetallemiscursosModule } from './detallemiscursos/detallemiscursos.module';
 
 const env = process.env;
 @Module({
@@ -71,6 +73,8 @@ const env = process.env;
     CursosModule,
     MiembrosposicionModule,
     DetallecursosModule,
+    MiscursosModule,
+    DetallemiscursosModule,
   ],
   controllers: [],
   providers: [],

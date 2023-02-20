@@ -86,4 +86,10 @@ export class CursosService {
       throw new NotFoundException('Error Actualizando la Coleccion del Cursos');
     }
   }
+
+  async findarray(id: any) {
+    const cursos = await this.cursorepo.find({ where: { id: id } });
+
+    console.log(cursos);
+  }
 }

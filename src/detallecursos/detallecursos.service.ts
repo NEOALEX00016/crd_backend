@@ -55,7 +55,10 @@ export class DetallecursosService {
   }
 
   async findCurso(id: number) {
-    const detalle = await this.detallerepo.findBy({ id_curso: id });
+    const detalle = await this.detallerepo.find({
+      where: { id_curso: id },
+      order: { id: 'ASC' },
+    });
 
     if (!detalle) throw new NotFoundException('Registro no encontrado');
 
@@ -90,6 +93,7 @@ export class DetallecursosService {
     });
 
     if (!curso) throw new NotFoundException('Error Encontrando Registro');
+    console.log(curso);
     try {
       await this.detallerepo.update(id, curso);
       return curso;

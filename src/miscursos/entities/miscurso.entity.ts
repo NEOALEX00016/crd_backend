@@ -1,35 +1,29 @@
-import { v4 as uuid } from 'uuid';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
 } from 'typeorm';
-
-@Entity('tbl_cursos')
-export class CursoEntity {
-  @PrimaryGeneratedColumn()
+@Entity('tbl_mis_cursos')
+export class MiscursoEntity {
+  @PrimaryColumn()
   id: number;
 
   @Column()
-  uuid: string;
+  id_miembro: number;
 
   @Column()
-  id_pais: number;
-  @Column()
-  descripcion: string;
-  @Column()
-  idcolection: string;
+  id_curso: number;
 
   @Column()
-  tipo: string;
+  fecha_de_inicio: Date;
 
   @Column()
-  nombre: string;
-
+  fecha_de_finalizacion: Date;
   @Column()
-  portada: string;
+  completado: string;
+
   @Column()
   estado: string;
   @Column()
@@ -52,7 +46,7 @@ export class CursoEntity {
   @BeforeInsert()
   agregadopor() {
     this.agregado_en = new Date();
-    this.uuid = uuid();
+    this.fecha_de_inicio = new Date();
   }
   @BeforeUpdate()
   modificadopor() {

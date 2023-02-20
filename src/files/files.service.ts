@@ -19,6 +19,7 @@ export class FilesService {
       const curso=await this.repocursos.findOne(id);
       const uuid= curso.uuid;
 
+      
     const urlportadas=`${process.env.URL_PORTADAS}${uuid}/${file.originalname}`
      const url = `${process.env.URL_API_PORTADAS}${uuid}/${file.originalname}`;
       const options = {
@@ -178,22 +179,13 @@ export class FilesService {
        
 }
 
-async crearFilevideo(file, id): Promise<AxiosResponse> {
-
- 
+async crearFilevideo(file, id){
 
   const url=process.env.URL_API_VIDEOS;
   const nombre=await this.repodetallecurso.findOne(id);
-
   const curso = await this.repocursos.findOne(nombre.id_curso);
-
   const colectionid=curso.idcolection;
-  
-
-
-console.log(colectionid);
-
-  const options = {
+    const options = {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -206,6 +198,10 @@ console.log(colectionid);
 
  
   try {
+    // if(nombre.guid.length>0){
+    //   await this.deleteFilevideo(nombre.guid);
+    // }
+
     const res = await fetch(url, options);
     const json = await res.json();
     const ids=json.guid;
@@ -214,11 +210,15 @@ console.log(colectionid);
     const urldto ={
       url:`${urlfinal}`,
       guid:`${ids}`
-
     }  
-    await this.repodetallecurso.updateurl(+id,urldto);
+    console.log(urlfinal);
+      await this.repodetallecurso.updateurl(+id,urldto);
+      return json;
+  
+  
+
+  
     
-    return json;
   } catch (err) {
    return err;
   }
@@ -227,6 +227,30 @@ console.log(colectionid);
 
 }
 
+
+async deleteFilevideo(id){
+
+  const url= `https://video.bunnycdn.com/library/93553/videos/${id}`
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+      AccessKey: process.env.VIDEO_API_KEY
+    },
+    };
+    console.log(options)
+    try {
+      const res = await fetch(url, options);
+      const json = await res.json();
+    
+   
+      return json;
+    } catch (err) {
+      console.error('error:' + err);
+    }
+  
+     
+}
 
 
 }
