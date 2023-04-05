@@ -4,7 +4,7 @@ import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 export class CreateAreaDto {
   @IsNumber()
   @ApiProperty({
-    description: 'Id del pai que pertenece',
+    description: 'Id del pais que pertenece',
     example: 1,
   })
   id_pais: number;
@@ -20,6 +20,7 @@ export class CreateAreaDto {
     example: 'Juventud',
   })
   nombre: string;
+  @IsString()
   @ApiProperty({
     description: 'Estado Actual en el sistema ',
     example: 'Activo',

@@ -29,6 +29,15 @@ import { MiembrosposicionModule } from './miembrosposicion/miembrosposicion.modu
 import { DetallecursosModule } from './detallecursos/detallecursos.module';
 import { MiscursosModule } from './miscursos/miscursos.module';
 import { DetallemiscursosModule } from './detallemiscursos/detallemiscursos.module';
+import { TipoinformacionModule } from './tipoinformacion/tipoinformacion.module';
+import { InformacionadicionalModule } from './informacionadicional/informacionadicional.module';
+import { ProyectonacionalModule } from './proyectonacional/proyectonacional.module';
+import { DetalleproyectosnacionalesModule } from './detalleproyectosnacionales/detalleproyectosnacionales.module';
+import { SubproyectosModule } from './subproyectos/subproyectos.module';
+import { ActividadesModule } from './actividades/actividades.module';
+import { MiembroactividadModule } from './miembroactividad/miembroactividad.module';
+import { DocumentosactividadModule } from './documentosactividad/documentosactividad.module';
+import { NotificacionModule } from './notificacion/notificacion.module';
 
 const env = process.env;
 @Module({
@@ -75,6 +84,15 @@ const env = process.env;
     DetallecursosModule,
     MiscursosModule,
     DetallemiscursosModule,
+    TipoinformacionModule,
+    InformacionadicionalModule,
+    ProyectonacionalModule,
+    DetalleproyectosnacionalesModule,
+    SubproyectosModule,
+    ActividadesModule,
+    MiembroactividadModule,
+    DocumentosactividadModule,
+    NotificacionModule,
   ],
   controllers: [],
   providers: [],

@@ -44,4 +44,12 @@ export class TiposdocumentosController {
   ) {
     return this.tiposdocumentosService.update(+id, updateTiposdocumentoDto);
   }
+
+
+  @Get('documentoid/:id')
+  @UseGuards(AuthGuard())
+  findid(@Param('id') id: number) {
+    return this.tiposdocumentosService.findid(id);
+  }
+
 }

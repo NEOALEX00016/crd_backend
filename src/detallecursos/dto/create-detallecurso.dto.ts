@@ -35,6 +35,49 @@ export class CreateDetallecursoDto {
     example: '1',
   })
   id_formulario: string;
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty({
+    description: 'Duracion del Video en segundo',
+    example: '162',
+  })
+  duracion: number;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({
+    description: 'Pregunta',
+    example: 'Quien descubrio america?',
+  })
+  pregunta: string;
+  @IsString()
+  @IsOptional()
+  @ApiProperty({
+    description: 'Posible respuesta numero 3',
+    example: 'Cristobal Colon',
+  })
+  respuesta1: string;
+  @IsString()
+  @IsOptional()
+  @ApiProperty({
+    description: 'Posible respuesta numero 2',
+    example: 'Erik el Rojo',
+  })
+  respuesta2: string;
+  @IsString()
+  @IsOptional()
+  @ApiProperty({
+    description: 'Posible respuesta numero 3',
+    example: 'Alexis German',
+  })
+  respuesta3: string;
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty({
+    description: 'Esta es la respuestado de correta',
+    example: '1',
+  })
+  correcta: number;
 
   @IsString()
   @ApiProperty({

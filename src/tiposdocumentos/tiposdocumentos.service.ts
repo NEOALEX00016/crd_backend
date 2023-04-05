@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateTiposdocumentoDto } from './dto/create-tiposdocumento.dto';
 import { UpdateTiposdocumentoDto } from './dto/update-tiposdocumento.dto';
@@ -62,6 +63,15 @@ export class TiposdocumentosService {
       return tipo;
     } catch (error) {
       throw new BadRequestException('Error al Actualizar Registro');
+    }
+  }
+
+  async findid(term: number) {
+    if (!isNaN(+term)) {
+      const tipo = await this.tiposrepo.findBy({ id: +term });
+      if (tipo.length <= 0)
+        throw new NotFoundException('Registro No Encontrados');
+      return tipo;
     }
   }
 }

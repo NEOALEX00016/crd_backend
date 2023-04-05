@@ -29,9 +29,20 @@ export class CursoEntity {
   nombre: string;
 
   @Column()
+  duracion: number;
+
+  @Column()
   portada: string;
+
+  @Column()
+  insignia: string;
+
+  @Column()
+  descripcioninsignia: string;
+
   @Column()
   estado: string;
+
   @Column()
   agregado_por: string;
   @Column({ type: 'timestamp' })

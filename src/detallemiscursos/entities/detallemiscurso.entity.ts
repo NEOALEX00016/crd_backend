@@ -15,6 +15,8 @@ export class DetallemiscursoEntity {
 
   @Column()
   tiempo: number;
+  @Column()
+  duracion: number;
 
   @Column()
   estado: string;
@@ -27,4 +29,17 @@ export class DetallemiscursoEntity {
   descripcion: string;
   @Column()
   url: string;
+  @Column()
+  tipo: string;
+
+  @Column()
+  pregunta: string;
+  @Column()
+  respuesta1: string;
+  @Column()
+  respuesta2: string;
+  @Column()
+  respuesta3: string;
+  @Column()
+  correcta: number;
 }

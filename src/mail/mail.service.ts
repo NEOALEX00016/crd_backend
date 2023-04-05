@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 
@@ -17,6 +18,28 @@ export class MailService {
         usuario: usuario,
         pass: pass,
         name: nombre,
+      },
+    });
+  }
+
+  async sendInvitacion(
+    urlok: string,
+    urlcancel: string,
+    email: string,
+    fecha: string,
+    actividad: string,
+    coordinador: string,
+    nombre: string,
+  ) {
+    await this.mailerService.sendMail({
+      to: email,
+      subject: `Saludos! Se ha Programado una Actividad en la que Puedes Participar`,
+      template: './invitacion',
+      context: {
+        fecha: fecha,
+        coordinador: coordinador,
+        name: nombre,
+        descripcion:actividad
       },
     });
   }

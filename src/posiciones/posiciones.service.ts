@@ -55,7 +55,5 @@ export class PosicionesService {
     } catch (error) {
       throw new BadRequestException(`Error Actulizando los registros ${error}`);
     }
-
-    return `This action updates a #${id} posicione`;
   }
 }

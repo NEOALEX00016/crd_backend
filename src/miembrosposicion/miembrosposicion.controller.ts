@@ -39,4 +39,9 @@ export class MiembrosposicionController {
   ) {
     return this.miembrosposicionService.update(+id, updateMiembrosposicionDto);
   }
+
+  @Get('miembro/:id')
+  findmiembro(@Param('id') id: string) {
+    return this.miembrosposicionService.findmiembro(+id);
+  }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { v4 as uuid } from 'uuid';
 import {
   BeforeInsert,
@@ -13,6 +14,9 @@ export class MiembroEntity {
 
   @Column()
   uuid: string;
+
+  @Column()
+  urlfoto: string;
   @Column()
   id_pais: number;
   @Column()
@@ -41,6 +45,9 @@ export class MiembroEntity {
   fecha_de_finalizacion: Date;
   @Column()
   tipo_miembro: number;
+
+  @Column()
+  sexo: string;
 
   @Column()
   estado: string;

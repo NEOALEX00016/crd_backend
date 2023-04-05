@@ -22,6 +22,7 @@ export class CreatePosicioneDto {
   })
   id_area: number;
   @IsNumber()
+  @IsOptional()
   @ApiProperty({
     description: 'id rol asociado',
     example: 1,
@@ -42,6 +43,7 @@ export class CreatePosicioneDto {
   posiciones_disponible: number;
   @IsNumber()
   @IsOptional()
+  
   @ApiProperty({
     description: 'Esto es si depede de otra posicion',
     example: 1,

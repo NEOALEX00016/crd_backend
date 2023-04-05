@@ -10,6 +10,7 @@ import { User } from 'src/auth/entities/user.entity';
 import { KeyService } from 'src/common/db/dberror/generatesecret';
 import { MailService } from 'src/mail/mail.service';
 import * as bcrypt from 'bcrypt';
+import { UpdateMiembroUrlDto } from './dto/update-miembrourl.dto';
 
 @Injectable()
 export class MiembrosService {
@@ -125,5 +126,24 @@ export class MiembrosService {
     }
 
     return miembro;
+  }
+
+
+
+
+  async updateurl(id: number, updateMiembroUrlDto: UpdateMiembroUrlDto) {
+    const miembro = await this.repomiem.preload({
+      id: id,
+      ...updateMiembroUrlDto,
+    });
+    if (!miembro)
+      throw new NotFoundException('Registro no encontrado para actualizar');
+
+    try {
+      await this.repomiem.update(id, miembro);
+      return miembro;
+    } catch (error) {
+      throw new BadRequestException(`Error Al Actualizar Miembro ${error}`);
+    }
   }
 }

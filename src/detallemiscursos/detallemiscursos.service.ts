@@ -42,9 +42,33 @@ export class DetallemiscursosService {
   }
 
   async finddetallemiscursos(idmiembro: number, idcurso: number) {
-    const detalle = await this.detarepo.findBy({
-      id_curso: idcurso,
-      id_miembro: idmiembro,
+    const detalle = await this.detarepo.find({
+      where: {
+        id_curso: idcurso,
+        id_miembro: idmiembro,
+      },
+      select: {
+        id: true,
+        id_mis_cursos: true,
+        id_detalle: true,
+        id_miembro: true,
+        id_curso: true,
+        tiempo: true,
+        descripcion: true,
+        estado: true,
+        titulo: true,
+        url: true,
+        pregunta: true,
+        respuesta1: true,
+        respuesta2: true,
+        respuesta3: true,
+        correcta: true,
+        tipo: true,
+        duracion: true,
+      },
+      order: {
+        id_detalle: 'ASC',
+    }
     });
 
     if (!detalle) throw new NotFoundException('Registro no Encontrado');

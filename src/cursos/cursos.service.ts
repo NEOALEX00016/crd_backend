@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
 import { UpdateCursoColectionDto } from './dto/update-curso_colection.dto';
 import { UpdateCursoPortadaDto } from './dto/update-cursoportada.dto';
+import { UpdateCursoInsigniaDto } from './dto/update-cursoinsignia.dto';
 
 @Injectable()
 export class CursosService {
@@ -91,5 +92,24 @@ export class CursosService {
     const cursos = await this.cursorepo.find({ where: { id: id } });
 
     console.log(cursos);
+  }
+
+  async updateinsignia(
+    id: number,
+    updateCursoInsigniaDto: UpdateCursoInsigniaDto,
+  ) {
+    const curso = await this.cursorepo.preload({
+      id,
+      ...updateCursoInsigniaDto,
+    });
+    console.log(curso);
+
+    if (!curso) throw new NotFoundException('Error Encontrando Registro');
+    try {
+      await this.cursorepo.update(id, curso);
+      return curso;
+    } catch (error) {
+      throw new NotFoundException('Error Actualizando la Coleccion del Cursos');
+    }
   }
 }

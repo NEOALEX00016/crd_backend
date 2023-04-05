@@ -12,5 +12,6 @@ import { MailModule } from 'src/mail/mail.module';
   controllers: [MiembrosController],
   providers: [MiembrosService, AuthService, KeyService],
   imports: [TypeOrmModule.forFeature([MiembroEntity]), AuthModule, MailModule],
+  exports: [MiembrosService],
 })
 export class MiembrosModule {}

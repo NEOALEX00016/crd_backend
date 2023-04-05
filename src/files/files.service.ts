@@ -7,11 +7,16 @@ import axios, { AxiosResponse } from 'axios';
 import { CursosService } from '../cursos/cursos.service';
 import { DetallecursosService } from '../detallecursos/detallecursos.service';
 import fetch from 'node-fetch';
+import { MiembrosService } from '../miembros/miembros.service';
+import { DocumentosactividadService } from '../documentosactividad/documentosactividad.service';
 @Injectable()
 export class FilesService {
   constructor(
     private readonly repocursos:CursosService,
-    private readonly repodetallecurso:DetallecursosService
+    private readonly repodetallecurso:DetallecursosService,
+    private readonly repofotomiembro:MiembrosService,
+    private readonly repoactividades:DocumentosactividadService
+
   ) {}
   async uploadPortadas(file, id) {
 
@@ -79,46 +84,70 @@ export class FilesService {
     
   }
 
-  async uploadMiembros(miembro, file): Promise<AxiosResponse> {
-    const headers = {
-      'Content-Type': 'application/octet-stream',
-      AccessKey: process.env.ARCHIVOS_API_KEY,
-    };
-    const buffer = file.buffer;
-    const base64 = buffer.toString('base64');
-    const data = `data:${file.mimetype};name=${file.originalname};base64,${base64}`;
-    const url = `${process.env.URL_API_MIEMBROS}${miembro}/${file.originalname}`;
-    try {
-      const response = await axios.put(url, data, {
-        headers,
-      });
-      const res = await response.data;
-      console.log(res);
-      return res;
-    } catch (error) {
-      throw error;
-    }
+  async uploadMiembros( file, id) {
+
+    const idmiembro=id;
+  
+    const miembros=await this.repofotomiembro.findOne(+id);
+
+    const uuid=miembros.uuid;
+     const urlmiembros=`${process.env.URL_MIEMBROS}${uuid}/${file.originalname}`
+     const url = `${process.env.URL_API_MIEMBROS}${uuid}/${file.originalname}`;
+      const options = {
+        method: 'PUT',
+        headers: {
+          'content-type': file.mimetype,
+          AccessKey: process.env.ARCHIVOS_API_KEY
+        },
+        body:file.buffer
+      };
+     const portadadto={
+      urlfoto: urlmiembros
+     }
+     
+      try {
+        const res = await fetch(url, options);
+        const json = await res.json();
+        await this.repofotomiembro.updateurl(+id,portadadto)
+     
+        return json;
+      } catch (err) {
+        console.error('error:' + err);
+      }
+    
   }
 
-  async uploadActividades(actividad, file): Promise<AxiosResponse> {
-    const headers = {
-      'Content-Type': 'application/octet-stream',
-      AccessKey: process.env.ARCHIVOS_API_KEY,
-    };
-    const buffer = file.buffer;
-    const base64 = buffer.toString('base64');
-    const data = `data:${file.mimetype};name=${file.originalname};base64,${base64}`;
-    const url = `${process.env.URL_API_ACTIVIDADES}${actividad}/${file.originalname}`;
-    try {
-      const response = await axios.put(url, data, {
-        headers,
-      });
-      const res = await response.data;
-      console.log(res);
-      return res;
-    } catch (error) {
-      throw error;
-    }
+  async uploadActividades(file, actividad){
+    
+   
+    const actividadd = await this.repoactividades.findactividad(+actividad);
+   
+    const uuidd = actividadd.uuid;
+     const urldocumentos=`${process.env.URL_ACTIVIDAD}${uuidd}/${file.originalname}`
+     const url = `${process.env.URL_API_ACTIVIDADES}${uuidd}/${file.originalname}`;
+      const options = {
+        method: 'PUT',
+        headers: {
+          'content-type': file.mimetype,
+          AccessKey: process.env.ARCHIVOS_API_KEY
+        },
+        body:file.buffer
+      };
+      console.log(urldocumentos);
+     const urldocumento={
+      url: urldocumentos
+     }
+     
+      try {
+        const res = await fetch(url, options);
+        const json = await res.json();
+        await this.repoactividades.update(+actividad,urldocumento);
+     
+        return json;
+      } catch (err) {
+        console.error('error:' + err);
+      }
+    
   }
 
   async crearcurso(idcurso): Promise<AxiosResponse> {
@@ -252,5 +281,42 @@ async deleteFilevideo(id){
      
 }
 
+
+async uploadinsigniacursos(file, idcurso) {
+  const id=idcurso;
+  console.log('1');
+  
+  const curso=await this.repocursos.findOne(+id);
+  console.log('2');
+  console.log('3');
+  
+
+    const uuid=curso.uuid;
+    const urlportadas=`${process.env.URL_INSIGNIA}${uuid}/${file.originalname}`
+    const url = `${process.env.URL_API_INSIGNIA}${uuid}/${file.originalname}`;
+    const options = {
+      method: 'PUT',
+      headers: {
+        'content-type': file.mimetype,
+        AccessKey: process.env.ARCHIVOS_API_KEY
+      },
+      body:file.buffer
+    };
+   const insignia={
+    insignia: urlportadas
+   }
+
+   try {
+    const res = await fetch(url, options);
+    const json = await res.json();
+    
+    await this.repocursos.updateinsignia(+id,insignia);
+ 
+    return json;
+  } catch (err) {
+    return err;
+  }
+    
+  }
 
 }

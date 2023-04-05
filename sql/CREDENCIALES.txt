@@ -1,0 +1,18 @@
+VNC IP:
+178.18.249.63
+
+VNC Port:
+63256
+
+
+password:
+VxLNAj4c98DB7h
+
+
+
+
+user putty:root
+
+ip:31.220.92.100
+
+

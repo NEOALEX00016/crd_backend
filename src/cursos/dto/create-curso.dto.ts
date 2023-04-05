@@ -33,6 +33,30 @@ export class CreateCursoDto {
   @IsString()
   @IsOptional()
   portada: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({
+    description: 'Url de la insignia',
+    example: 'https://',
+  })
+  insignia: string;
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty({
+    description: 'Duracion de Cursos en segundo',
+    example: '360',
+  })
+  duracion: number;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({
+    description: 'Breve descripcion de la insignia',
+    example: 'https://',
+  })
+  descripcioninsignia: string;
+
   @IsString()
   @ApiProperty({
     description: 'Estado Actual en el sistema ',

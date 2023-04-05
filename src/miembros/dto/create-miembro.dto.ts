@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
@@ -39,6 +41,7 @@ export class CreateMiembroDto {
     example: 'Alexis',
   })
   nombre: string;
+
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -97,6 +100,12 @@ export class CreateMiembroDto {
   })
   tipo_miembro: number;
 
+@IsString()
+@IsNotEmpty()
+@ApiProperty({
+  description: 'Sexo del Miembro',  
+})
+sexo: string;
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({

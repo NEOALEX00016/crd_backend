@@ -27,10 +27,21 @@ export class DetallecursoEntity {
   @Column()
   portada: string;
   @Column()
+  duracion: number;
+  @Column()
   uuid: string;
   @Column()
   guid: string;
-
+  @Column()
+  pregunta: string;
+  @Column()
+  respuesta1: string;
+  @Column()
+  respuesta2: string;
+  @Column()
+  respuesta3: string;
+  @Column()
+  correcta: number;
   @Column()
   estado: string;
   @Column()

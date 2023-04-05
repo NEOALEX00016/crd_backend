@@ -25,19 +25,17 @@ export class FilesController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadFilemiembros(
     @UploadedFile() file,
-    @Body('miembro') miembro,
+    @Body('id') id,
   ): Promise<AxiosResponse> {
-    //return file
-    return await this.filesService.uploadMiembros(file, miembro);
+    return await this.filesService.uploadMiembros(file, id);
   }
   @Post('actividades')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFileactividades(
-    @UploadedFile() file,
-    @Body('actividad') actividad,
-  ): Promise<AxiosResponse> {
-    //return file
-    return await this.filesService.uploadActividades(file, actividad);
+    @UploadedFile() file: Express.Multer.File,
+    @Body('id') id,
+  ) {
+    return await this.filesService.uploadActividades(file, id);
   }
 
   @Post('portadasvideos')
@@ -64,5 +62,15 @@ export class FilesController {
   ) {
     //return file
     return await this.filesService.crearFilevideo(file, id);
+  }
+
+  @Post('insigniacursos')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadinsigniacursos(
+    @UploadedFile() file: Express.Multer.File,
+    @Body('idcurso') idcurso,
+  ) {
+    //return file
+    return await this.filesService.uploadinsigniacursos(file, idcurso);
   }
 }
