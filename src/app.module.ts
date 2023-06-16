@@ -38,6 +38,8 @@ import { ActividadesModule } from './actividades/actividades.module';
 import { MiembroactividadModule } from './miembroactividad/miembroactividad.module';
 import { DocumentosactividadModule } from './documentosactividad/documentosactividad.module';
 import { NotificacionModule } from './notificacion/notificacion.module';
+import { RankingModule } from './ranking/ranking.module';
+import { ReportesModule } from './reportes/reportes.module';
 
 const env = process.env;
 @Module({
@@ -93,6 +95,8 @@ const env = process.env;
     MiembroactividadModule,
     DocumentosactividadModule,
     NotificacionModule,
+    RankingModule,
+    ReportesModule,
   ],
   controllers: [],
   providers: [],

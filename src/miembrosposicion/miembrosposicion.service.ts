@@ -33,7 +33,10 @@ export class MiembrosposicionService {
   }
 
   async findOne(id: number) {
-    const miembro = await this.repomiem.findOneBy({ id: id });
+    const miembro = await this.repomiem.query(`select miem.*,po.nombre posicion,sed.nombre sede from iniciar.tbl_miembros_posiciones miem
+    join iniciar.tbl_posiciones po on po.id=miem.id_posicion    
+    join iniciar.tbl_sedes sed on sed.id=po.id_sede    
+    where miem.id=${id}`);
     if (!miembro) throw new NotFoundException('Registro no encontrado');
     return miembro;
   }

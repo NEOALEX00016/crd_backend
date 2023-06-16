@@ -29,4 +29,9 @@ export class ActividadesController {
   ) {
     return this.actividadesService.update(+id, updateActividadeDto);
   }
+
+  @Get('misactividades/:id')
+  findactividadesmiembros(@Param('id') id: string) {
+    return this.actividadesService.findactividadesmiembros(+id);
+  }
 }

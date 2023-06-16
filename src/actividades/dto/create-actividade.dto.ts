@@ -42,7 +42,7 @@ export class CreateActividadeDto {
   @ApiProperty({
     example: 'No es Obligatorio',
   })
-  entregablebienes: boolean;
+  entregabienes: boolean;
   @IsBoolean()
   @IsOptional()
   @ApiProperty({

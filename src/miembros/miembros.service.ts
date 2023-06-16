@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateMiembroDto } from './dto/create-miembro.dto';
 import { UpdateMiembroDto } from './dto/update-miembro.dto';
 import { MiembroEntity } from './entities/miembro.entity';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
 import { User } from 'src/auth/entities/user.entity';
 import { KeyService } from 'src/common/db/dberror/generatesecret';
@@ -146,4 +146,75 @@ export class MiembrosService {
       throw new BadRequestException(`Error Al Actualizar Miembro ${error}`);
     }
   }
+
+async miequipocoord(idposicion:number){
+  const equipo= await this.repomiem.query(`
+  SELECT mi.urlfoto,mi.nombre,mi.apellido,mi.id FROM iniciar.tbl_miembros mi 
+join iniciar.tbl_miembros_posiciones miempo
+on miempo.id_miembro=mi.id
+join iniciar.tbl_posiciones pos
+on pos.id=miempo.id_posicion
+where 1=1
+and miempo.estado='Activo'
+and pos.depende=${idposicion};
+  `);
+
+  if(equipo==0){
+    throw new NotFoundException('No Contiene un Equipo');
+
+  }
+
+  return equipo;
+}
+async misuperior(idposicion:number){
+  const equipo= await this.repomiem.query(`
+  SELECT mi.urlfoto,mi.nombre,mi.apellido,mi.id FROM iniciar.tbl_miembros mi 
+join iniciar.tbl_miembros_posiciones miempo
+on miempo.id_miembro=mi.id
+join iniciar.tbl_posiciones pos
+on pos.id=miempo.id_posicion
+where 1=1
+and miempo.estado='Activo'
+and pos.id=(select depende from iniciar.tbl_posiciones where id=${idposicion})
+  `);
+
+  if(equipo==0){
+    throw new NotFoundException('No Contiene un Equipo');
+
+  }
+
+  return equipo;
+}
+async homologos(idposicion:number, idmiembro:number){
+  const equipo= await this.repomiem.query(`
+  SELECT 1 nivel,mi.urlfoto,mi.nombre,mi.apellido,mi.id,pos.nombre posicion FROM iniciar.tbl_miembros mi 
+  join iniciar.tbl_miembros_posiciones miempo
+  on miempo.id_miembro=mi.id
+  join iniciar.tbl_posiciones pos
+  on pos.id=miempo.id_posicion
+  where 1=1
+  and miempo.estado='Activo'
+  and pos.id=(select depende from iniciar.tbl_posiciones where id=${idposicion})
+  union
+  SELECT 2 nivel, mi.urlfoto,mi.nombre,mi.apellido,mi.id,pos.nombre posicion FROM iniciar.tbl_miembros mi 
+  join iniciar.tbl_miembros_posiciones miempo
+  on miempo.id_miembro=mi.id
+  join iniciar.tbl_posiciones pos
+  on pos.id=miempo.id_posicion
+  where 1=1
+  and miempo.estado='Activo'
+  and pos.depende=(select depende from iniciar.tbl_posiciones where id=${idposicion})
+  and miempo.id_miembro<>${idmiembro}
+  
+  order by 1
+  `);
+
+  if(equipo==0){
+    throw new NotFoundException('No Contiene un Equipo');
+
+  }
+
+  return equipo;
+}
+
 }

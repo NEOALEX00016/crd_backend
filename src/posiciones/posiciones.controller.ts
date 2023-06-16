@@ -42,4 +42,12 @@ export class PosicionesController {
   ) {
     return this.posicionesService.update(+id, updatePosicioneDto);
   }
+
+
+  @Get('porsede/:id_sede')
+  @UseGuards(AuthGuard())
+  findporsede(@Param('id_sede') id_sede: number) {
+    return this.posicionesService.findporsede(id_sede);
+  }
+
 }

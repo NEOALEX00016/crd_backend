@@ -53,4 +53,20 @@ export class MiembrosController {
   porsedearea(@Param('sede') sede: number, @Param('area') area: number) {
     return this.miembrosService.porsedearea(+sede, +area);
   }
+
+  @Get('miequipocoord/:idposicion')
+  miequipocoord(@Param('idposicion') idposicion: number) {
+    return this.miembrosService.miequipocoord(idposicion);
+  }
+  @Get('misuperior/:idposicion')
+  misuperior(@Param('idposicion') idposicion: number) {
+    return this.miembrosService.misuperior(idposicion);
+  }
+  @Get('mishomologos/:idposicion/:idmiembro')
+  homologos(
+    @Param('idposicion') idposicion: number,
+    @Param('idposicion') idmiembro: number,
+  ) {
+    return this.miembrosService.homologos(idposicion, idmiembro);
+  }
 }

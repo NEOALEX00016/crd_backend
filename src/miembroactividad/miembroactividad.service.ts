@@ -92,7 +92,7 @@ export class MiembroactividadService {
 
     for (const posicione of posiciones) {
       const miembros = await this.repomiembroposicion.find({
-        where: { id_posicion: posicione.id },
+        where: { id_posicion: posicione.id, estado: 'Activo' },
       });
 
       for (const miembro of miembros) {
@@ -195,5 +195,123 @@ export class MiembroactividadService {
         'No Se encuantran Registros Aceptados para esta Actividad',
       );
     return result;
+  }
+  async misactividades(miembro: number, estado: string) {
+    if (estado == 'all') {
+      const result = await this.repomiembro.query(
+        `SELECT ACT.DESCRIPCION ACTIVIDAD,
+      ACT.CODIGO,
+      ACT.ID
+      ID_ACTIVIDAD,
+      ACT.FECHA_ACTIVIDAD,
+      ACT.AREA_DE_ACCION,
+      MI.ESTADO,
+      ACEPTADO_EN,
+      RECHAZADO_EN,
+      mi.id_miembro
+    FROM INICIAR.TBL_MIEMBROS_ACTIVIDAD MI
+    JOIN INICIAR.TBL_ACTIVIDADES ACT ON ACT.ID = MI.ID_ACTIVIDAD
+    where 1=1 
+    and mi.id_miembro=${miembro}
+    order by act.fecha_actividad
+    `,
+      );
+
+      if (!result)
+        throw new NotFoundException(
+          'No Se encuantran Registros Aceptados para esta Actividad',
+        );
+      return result;
+    } else {
+      const result = await this.repomiembro.query(
+        `SELECT ACT.DESCRIPCION ACTIVIDAD,
+      ACT.CODIGO,
+      ACT.ID
+      ID_ACTIVIDAD,
+      ACT.FECHA_ACTIVIDAD,
+      ACT.AREA_DE_ACCION,
+      act.estado estado_actividad,
+      MI.ESTADO,
+      ACEPTADO_EN,
+      RECHAZADO_EN,
+      mi.id_miembro
+    FROM INICIAR.TBL_MIEMBROS_ACTIVIDAD MI
+    JOIN INICIAR.TBL_ACTIVIDADES ACT ON ACT.ID = MI.ID_ACTIVIDAD
+    where 1=1 
+    and mi.id_miembro=${miembro}
+    and mi.estado='${estado}'
+    order by act.fecha_actividad
+    `,
+      );
+
+      if (!result)
+        throw new NotFoundException(
+          'No Se encuantran Registros Aceptados para esta Actividad',
+        );
+      return result;
+    }
+  }
+  async invitacionmiembros(actividad: number, estado: string) {
+    if (estado == 'all') {
+      const result = await this.repomiembro.query(
+        `SELECT ACT.DESCRIPCION ACTIVIDAD,
+        ACT.CODIGO,
+        ACT.ID
+        ID_ACTIVIDAD,
+        ACT.FECHA_ACTIVIDAD,
+        ACT.AREA_DE_ACCION,
+        MI.ESTADO,
+        ACEPTADO_EN,
+        RECHAZADO_EN,
+        mi.id_miembro,
+      miem.nombre,
+      miem.apellido,
+      miem.urlfoto	  
+      FROM INICIAR.TBL_MIEMBROS_ACTIVIDAD MI
+      JOIN INICIAR.TBL_ACTIVIDADES ACT ON ACT.ID = MI.ID_ACTIVIDAD
+    join iniciar.tbl_miembros miem on miem.id=mi.id_miembro
+      where 1=1 
+      and mi.id_actividad=${actividad}
+      order by act.fecha_actividad
+    `,
+      );
+
+      if (result == 0)
+        throw new NotFoundException(
+          'No Se encuentran Registros Miembros Invitados para esta Actividad',
+        );
+
+      return result;
+    } else {
+      const result = await this.repomiembro.query(
+        `SELECT ACT.DESCRIPCION ACTIVIDAD,
+        ACT.CODIGO,
+        ACT.ID
+        ID_ACTIVIDAD,
+        ACT.FECHA_ACTIVIDAD,
+        ACT.AREA_DE_ACCION,
+        MI.ESTADO,
+        ACEPTADO_EN,
+        RECHAZADO_EN,
+        mi.id_miembro,
+      miem.nombre,
+      miem.apellido,
+      miem.urlfoto	  
+      FROM INICIAR.TBL_MIEMBROS_ACTIVIDAD MI
+      JOIN INICIAR.TBL_ACTIVIDADES ACT ON ACT.ID = MI.ID_ACTIVIDAD
+    join iniciar.tbl_miembros miem on miem.id=mi.id_miembro
+      where 1=1 
+      and mi.id_actividad=${actividad}
+     and mi.estado='${estado}'
+    order by act.fecha_actividad
+    `,
+      );
+
+      if (result === 0)
+        throw new NotFoundException(
+          'No Se encuantran Registros Miembros Aceptados para esta Actividad',
+        );
+      return result;
+    }
   }
 }

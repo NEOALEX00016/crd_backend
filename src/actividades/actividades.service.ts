@@ -51,7 +51,16 @@ export class ActividadesService {
       await this.repoactividades.update(id, actividades);
       return actividades;
     } catch (error) {
-      throw new BadRequestException('Error Creando Actividad');
+      throw new BadRequestException(`Error Actualizando Actividad: ${error}`);
     }
+  }
+
+  async findactividadesmiembros(id: number) {
+    const actividades = await this.repoactividades.find({
+      where: { id_miembro: id },
+    });
+    if (actividades.length <= 0)
+      throw new NotFoundException(`Registro no encontrado para el id ${id}`);
+    return actividades;
   }
 }

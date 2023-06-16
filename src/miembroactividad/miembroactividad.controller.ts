@@ -59,4 +59,19 @@ export class MiembroactividadController {
   findaceptados(@Param('id') id: number) {
     return this.miembroactividadService.findaceptados(id);
   }
+
+  @Get('misactividades/:idmiembro/:estado')
+  misactividades(
+    @Param('idmiembro') idmiembro: number,
+    @Param('estado') estado: string,
+  ) {
+    return this.miembroactividadService.misactividades(idmiembro, estado);
+  }
+  @Get('invitacionmiembros/:idactividad/:estado')
+  invitacionmiembros(
+    @Param('idactividad') idactividad: number,
+    @Param('estado') estado: string,
+  ) {
+    return this.miembroactividadService.invitacionmiembros(idactividad, estado);
+  }
 }

@@ -56,4 +56,11 @@ export class PosicionesService {
       throw new BadRequestException(`Error Actulizando los registros ${error}`);
     }
   }
+
+  async findporsede(id_sede: number) {
+    const posicion = await this.porepo.find({ where: { id_sede: id_sede } });
+    if (posicion.length <= 0)
+      throw new NotFoundException(`Esta Sede no tiene posicion asignadas`);
+    return posicion;
+  }
 }
